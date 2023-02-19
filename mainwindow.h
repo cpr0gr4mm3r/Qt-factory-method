@@ -29,8 +29,8 @@ private:
     void processInformation();
 
 signals:
-    void transmit_name_to_object(std::string value);
-    void transmit_age_to_object(std::string value);
+    void transmit_name_to_object(std::string name);
+    void transmit_age_to_object(std::string age);
 
 private slots:
     void on_startGamePushButton_clicked();
