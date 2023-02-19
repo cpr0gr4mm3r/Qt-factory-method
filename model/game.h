@@ -3,6 +3,7 @@
 
 
 #include <vector>
+#include <string>
 
 class User;
 class VehicleFactory;
@@ -13,7 +14,7 @@ private:
     User* m_user;
     std::vector<VehicleFactory*> m_vehicleFactories;
 public:
-    Game(std::vector<VehicleFactory*> vehicleFactories);
+    Game(std::string name, std::string age, std::vector<VehicleFactory*> vehicleFactories);
     void startGameLogic();
 
     User* getUser();

@@ -11,9 +11,13 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_model(new QStringListModel(this))
+    , m_gameLauncher(new GameLauncher())
 {
     ui->setupUi(this);
     ui->changeStatePushButton->setEnabled(false);
+
+    connect(this, SIGNAL(transmit_name_to_object(std::string)), m_gameLauncher, SLOT(receive_name_from_gui(std::string)));
+    connect(this, SIGNAL(transmit_age_to_object(std::string)), m_gameLauncher, SLOT(receive_age_from_gui(std::string)));
 }
 
 MainWindow::~MainWindow()
@@ -56,7 +60,6 @@ void MainWindow::processInformation()
 {
     if (Utilities::ageIsValid(ui->userAgeLineEdit->text()))
     {
-        m_gameLauncher = new GameLauncher();
         ui->startGamePushButton->setEnabled(false);
         ui->changeStatePushButton->setEnabled(true);
         addLogs();
@@ -115,5 +118,17 @@ void MainWindow::on_changeStatePushButton_clicked()
     }
     refreshTable();
     addLogs();
+}
+
+
+void MainWindow::on_userNameLineEdit_textChanged(const QString &arg1)
+{
+    emit transmit_name_to_object(arg1.toStdString());
+}
+
+
+void MainWindow::on_userAgeLineEdit_textChanged(const QString &arg1)
+{
+    emit transmit_age_to_object(arg1.toStdString());
 }
 

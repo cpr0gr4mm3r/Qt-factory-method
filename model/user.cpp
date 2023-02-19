@@ -4,7 +4,7 @@
 
 using namespace std;
 
-User::User()
+User::User(std::string name, std::string age): m_name(name), m_age(age)
 {
 
 }

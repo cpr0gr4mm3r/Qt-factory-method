@@ -28,10 +28,17 @@ private:
     void refreshTable();
     void processInformation();
 
+signals:
+    void transmit_name_to_object(std::string value);
+    void transmit_age_to_object(std::string value);
+
 private slots:
     void on_startGamePushButton_clicked();
-
     void on_changeStatePushButton_clicked();
+
+    void on_userNameLineEdit_textChanged(const QString &arg1);
+
+    void on_userAgeLineEdit_textChanged(const QString &arg1);
 
 private:
     Ui::MainWindow *ui;

@@ -11,17 +11,17 @@ class User
 {
 private:
     std::string m_name;
-    unsigned char m_age;
+    std::string m_age;
     std::vector<Vehicle*> m_vehicles;
 
 public:
-    User();
+    User(std::string name, std::string age);
 
     std::string getName() {return m_name;}
     void setName(const std::string &name) {m_name = name;}
 
-    unsigned char getAge() {return m_age;}
-    void setAge(const unsigned char &age) {m_age = age;}
+    std::string getAge() {return m_age;}
+    void setAge(const std::string &age) {m_age = age;}
 
     Vehicle* getVehicle(const std::string &identifier);
     void addVehicle(Vehicle* vehicle);

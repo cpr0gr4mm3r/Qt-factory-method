@@ -5,9 +5,9 @@
 
 using namespace std;
 
-Game::Game(vector<VehicleFactory*> vehicleFactories): m_vehicleFactories(vehicleFactories)
+Game::Game(std::string name, std::string age, vector<VehicleFactory*> vehicleFactories): m_vehicleFactories(vehicleFactories)
 {
-    m_user = new User();
+    m_user = new User(name, age);
     for (vector<VehicleFactory*>::iterator vehiclesFactoryIterator = m_vehicleFactories.begin(); vehiclesFactoryIterator != m_vehicleFactories.end(); vehiclesFactoryIterator++)
     {
         m_user->addVehicle((*vehiclesFactoryIterator)->factoryMethod());
