@@ -4,7 +4,9 @@
 #include "motorbikefactory.h"
 #include "planefactory.h"
 #include "game.h"
+#include "logger.h"
 #include "vehicletablemodel.h"
+#include <QStringListModel>
 
 using namespace std;
 
@@ -23,18 +25,47 @@ void GameLauncher::initGame()
     Game* game = new Game(m_userName, m_userAge, m_carLicense, m_motorbikeLicense, m_boatLicense, m_planeLicense, vehicleFactories);
     game->startGameLogic();
     m_games[m_userName] = game;
-    sendModelToGuiByUser(m_userName);
     m_initializated = true;
+    sendModelsToGuiByUser(m_userName);
 }
 
-bool GameLauncher::hasLicenseForVehicleByUser(const string &userName, Vehicle* vehicle) const
+bool GameLauncher::updateState(const string &name, Vehicle* vehicle)
 {
-    return m_games.at(userName)->userHasLicenseForVehicle(vehicle);
+    bool getLicenseForVehicle(m_games.at(name)->userHasLicenseForVehicle(vehicle));
+    bool stateChanged = false;
+    if (getLicenseForVehicle && vehicle->isRunning())
+    {
+        vehicle->stop();
+        stateChanged = true;
+    }
+    else if (getLicenseForVehicle)
+    {
+        vehicle->start();
+        stateChanged = true;
+    }
+    return stateChanged;
 }
 
-vector<Vehicle*> GameLauncher::getVehiclesByUser(const string &userName) const
+void GameLauncher::updateState(const string &userName, const string &vehicleIdentifier)
 {
-    return m_games.at(userName)->getUserVehicles();
+    Vehicle* returnedVehicle = nullptr;
+    std::vector<Vehicle*> vehicles = m_games.at(userName)->getUserVehicles();
+    for (std::vector<Vehicle*>::iterator vehicleIterator = vehicles.begin(); vehicleIterator != vehicles.end(); vehicleIterator++)
+    {
+        (*vehicleIterator)->getLogger()->clearLines();
+        if (QString::fromStdString((*vehicleIterator)->getIdentifier()).contains(QString::fromStdString(vehicleIdentifier)))
+        {
+            returnedVehicle = *vehicleIterator;
+            break;
+        }
+    }
+    if (returnedVehicle)
+    {
+        if (updateState(userName, returnedVehicle))
+        {
+            sendModelsToGuiByUser(userName);
+        }
+    }
 }
 
 void GameLauncher::receiveNameFromGui(const string &name)
@@ -67,7 +98,26 @@ void GameLauncher::receivePlaneLicenseFromGui(const bool &planeLicense)
     m_planeLicense = planeLicense;
 }
 
-void GameLauncher::sendModelToGuiByUser(const string &userName)
+void GameLauncher::sendLogsModelToGui(const string &userName)
+{
+    std::vector<Vehicle*> vehicles = m_games.at(userName)->getUserVehicles();
+    QStringListModel* model = new QStringListModel(this);
+    for (std::vector<Vehicle*>::iterator vehicleIterator = vehicles.begin(); vehicleIterator != vehicles.end(); vehicleIterator++)
+    {
+        std::vector<std::string> lines = (*vehicleIterator)->getLogger()->getLines();
+        for (std::vector<std::string>::iterator lineIterator = lines.begin(); lineIterator != lines.end(); lineIterator++)
+        {
+            m_loggerList << QString::fromStdString(*lineIterator);
+        }
+        (*vehicleIterator)->getLogger()->clearLines();
+    }
+    model->setStringList(m_loggerList);
+    emit sendLogsModelToGui(model);
+}
+
+void GameLauncher::sendModelsToGuiByUser(const string &userName)
 {
     emit sendModelToGui(new VehicleTableModel(this, m_games.at(userName)->getUserVehicles()));
+    emit sendVehiclesToGui(m_games.at(userName)->getUserVehicles());
+    sendLogsModelToGui(userName);
 }

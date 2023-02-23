@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QStringListModel>
 #include <vector>
+#include "model\vehicle.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -11,7 +11,7 @@ QT_END_NAMESPACE
 
 class GameLauncher;
 class VehicleTableModel;
-class Vehicle;
+class QStringListModel;
 
 class MainWindow : public QMainWindow
 {
@@ -23,15 +23,9 @@ public:
 
 private:
     GameLauncher* m_gameLauncher;
-    QStringListModel* m_model;
-    QStringList m_list;
 
 private:
-    std::vector<Vehicle*> getVehiclesByCurrentUser();
-    void addLogs();
-    void refreshTable();
     void processInformation();
-    void updateState(Vehicle* vehicle);
 
 signals:
     void sendNameToGameLauncher(const std::string &name);
@@ -45,6 +39,8 @@ private slots:
     void onUserNameLineEditTextChanged(const QString &arg1);
     void onUserAgeLineEditTextChanged(const QString &arg1);
     void receiveModelFromGameLauncher(VehicleTableModel* vehicleTableModel);
+    void receiveLogsModelFromGameLauncher(QStringListModel* model);
+    void refreshVehiclesTableWidget(std::vector<Vehicle*> vehicles);
     void onCarLicenseCheckBoxStateChanged(int arg1);
     void onMotorcycleLicenseCheckBoxStateChanged(int arg1);
     void onBoatLicenseCheckBoxStateChanged(int arg1);
