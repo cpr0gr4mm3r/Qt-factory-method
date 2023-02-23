@@ -6,6 +6,7 @@
 #include <string>
 
 class User;
+class Vehicle;
 class VehicleFactory;
 
 class Game
@@ -14,10 +15,10 @@ private:
     User* m_user;
     std::vector<VehicleFactory*> m_vehicleFactories;
 public:
-    Game(std::string name, std::string age, std::vector<VehicleFactory*> vehicleFactories);
+    Game(const std::string &name, const std::string &age, const bool &carLicense, const bool &motorbikeLicense, const bool &boatLicense, const bool &planeLicense, const std::vector<VehicleFactory*> &vehicleFactories);
     void startGameLogic();
-
-    User* getUser();
+    bool userHasLicenseForVehicle(Vehicle* vehicle) const;
+    std::vector<Vehicle*> getUserVehicles() const;
 };
 
 #endif // GAME_H

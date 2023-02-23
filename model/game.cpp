@@ -5,9 +5,9 @@
 
 using namespace std;
 
-Game::Game(std::string name, std::string age, vector<VehicleFactory*> vehicleFactories): m_vehicleFactories(vehicleFactories)
+Game::Game(const string &name, const string &age, const bool &carLicense, const bool &motorbikeLicense, const bool &boatLicense, const bool &planeLicense, const vector<VehicleFactory*> &vehicleFactories): m_vehicleFactories(vehicleFactories)
 {
-    m_user = new User(name, age);
+    m_user = new User(name, age, carLicense, motorbikeLicense, boatLicense, planeLicense);
     for (vector<VehicleFactory*>::iterator vehiclesFactoryIterator = m_vehicleFactories.begin(); vehiclesFactoryIterator != m_vehicleFactories.end(); vehiclesFactoryIterator++)
     {
         m_user->addVehicle((*vehiclesFactoryIterator)->factoryMethod());
@@ -16,13 +16,22 @@ Game::Game(std::string name, std::string age, vector<VehicleFactory*> vehicleFac
 
 void Game::startGameLogic()
 {
-    m_user->getVehicle("BOAT")->start();
-    m_user->getVehicle("CAR")->start();
-    m_user->getVehicle("MOTORBIKE")->start();
-    m_user->getVehicle("PLANE")->start();
+    vector<Vehicle*> vehicles = m_user->getVehicles();
+    for (vector<Vehicle*>::iterator vehiclesIterator = vehicles.begin(); vehiclesIterator != vehicles.end(); vehiclesIterator++)
+    {
+        if (m_user->hasLicenseForVehicle((*vehiclesIterator)))
+        {
+            (*vehiclesIterator)->start();
+        }
+    }
 }
 
-User* Game::getUser()
+bool Game::userHasLicenseForVehicle(Vehicle* vehicle) const
 {
-    return m_user;
+    return m_user->hasLicenseForVehicle(vehicle);
+}
+
+vector<Vehicle*> Game::getUserVehicles() const
+{
+    return m_user->getVehicles();
 }

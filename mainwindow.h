@@ -3,12 +3,15 @@
 
 #include <QMainWindow>
 #include <QStringListModel>
+#include <vector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class GameLauncher;
+class VehicleTableModel;
+class Vehicle;
 
 class MainWindow : public QMainWindow
 {
@@ -24,21 +27,30 @@ private:
     QStringList m_list;
 
 private:
+    std::vector<Vehicle*> getVehiclesByCurrentUser();
     void addLogs();
     void refreshTable();
     void processInformation();
+    void updateState(Vehicle* vehicle);
 
 signals:
-    void transmit_name_to_object(std::string name);
-    void transmit_age_to_object(std::string age);
+    void sendNameToGameLauncher(const std::string &name);
+    void sendAgeToGameLauncher(const std::string &age);
+    void sendCarLicenseToGameLauncher(const bool &carLicense);
+    void sendMotorbikeLicenseToGameLauncher(const bool &motorbikeLicense);
+    void sendBoatLicenseToGameLauncher(const bool &boatLicense);
+    void sendPlaneLicenseToGameLauncher(const bool &planeLicense);
 
 private slots:
-    void on_startGamePushButton_clicked();
-    void on_changeStatePushButton_clicked();
-
-    void on_userNameLineEdit_textChanged(const QString &arg1);
-
-    void on_userAgeLineEdit_textChanged(const QString &arg1);
+    void onUserNameLineEditTextChanged(const QString &arg1);
+    void onUserAgeLineEditTextChanged(const QString &arg1);
+    void receiveModelFromGameLauncher(VehicleTableModel* vehicleTableModel);
+    void onCarLicenseCheckBoxStateChanged(int arg1);
+    void onMotorcycleLicenseCheckBoxStateChanged(int arg1);
+    void onBoatLicenseCheckBoxStateChanged(int arg1);
+    void onPlaneLicenseCheckBoxStateChanged(int arg1);
+    void onStartGamePushButtonClicked();
+    void onChangeStatePushButtonClicked();
 
 private:
     Ui::MainWindow *ui;

@@ -21,6 +21,7 @@ SOURCES += \
     model/planefactory.cpp \
     model/vehicle.cpp \
     model/vehiclefactory.cpp \
+    model/vehicletablemodel.cpp \
     model\car.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     model/planefactory.h \
     model/vehicle.h \
     model/vehiclefactory.h \
+    model/vehicletablemodel.h \
     model\car.h \
     mainwindow.h \
     model\user.h \

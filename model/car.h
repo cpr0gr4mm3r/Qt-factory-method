@@ -3,12 +3,9 @@
 
 
 #include "vehicle.h"
-#include <string>
 
 class Car: public Vehicle
 {
-private:
-    std::string m_identifier;
 public:
     Car(const std::string &identifier);
 

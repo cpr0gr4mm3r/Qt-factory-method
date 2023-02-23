@@ -4,33 +4,70 @@
 #include "motorbikefactory.h"
 #include "planefactory.h"
 #include "game.h"
-#include "user.h"
-#include <iostream>
+#include "vehicletablemodel.h"
 
-GameLauncher::GameLauncher(QObject *parent)
+using namespace std;
+
+GameLauncher::GameLauncher(QObject *parent): m_initializated(false), m_carLicense(false), m_motorbikeLicense(false), m_boatLicense(false), m_planeLicense(false)
 {
-    std::vector<VehicleFactory*> vehicleFactories;
+
+}
+
+void GameLauncher::initGame()
+{
+    vector<VehicleFactory*> vehicleFactories;
     vehicleFactories.push_back(new BoatFactory());
     vehicleFactories.push_back(new CarFactory());
     vehicleFactories.push_back(new MotorbikeFactory());
     vehicleFactories.push_back(new PlaneFactory());
-    m_game = new Game(m_userName, m_userAge, vehicleFactories);
-    m_game->startGameLogic();
+    Game* game = new Game(m_userName, m_userAge, m_carLicense, m_motorbikeLicense, m_boatLicense, m_planeLicense, vehicleFactories);
+    game->startGameLogic();
+    m_games[m_userName] = game;
+    sendModelToGuiByUser(m_userName);
+    m_initializated = true;
 }
 
-std::vector<Vehicle*> GameLauncher::getVehicles()
+bool GameLauncher::hasLicenseForVehicleByUser(const string &userName, Vehicle* vehicle) const
 {
-    return m_game->getUser()->getVehicles();
+    return m_games.at(userName)->userHasLicenseForVehicle(vehicle);
 }
 
-void GameLauncher::receive_name_from_gui(std::string name)
+vector<Vehicle*> GameLauncher::getVehiclesByUser(const string &userName) const
 {
-    std::cout << "Name received from gui: " << name << std::endl;
+    return m_games.at(userName)->getUserVehicles();
+}
+
+void GameLauncher::receiveNameFromGui(const string &name)
+{
     m_userName = name;
 }
 
-void GameLauncher::receive_age_from_gui(std::string age)
+void GameLauncher::receiveAgeFromGui(const string &age)
 {
-    std::cout << "Age received from gui: " << age << std::endl;
     m_userAge = age;
+}
+
+void GameLauncher::receiveCarLicenseFromGui(const bool &carLicense)
+{
+    m_carLicense = carLicense;
+}
+
+void GameLauncher::receiveMotorbikeLicenseFromGui(const bool &motorbikeLicense)
+{
+    m_motorbikeLicense = motorbikeLicense;
+}
+
+void GameLauncher::receiveBoatLicenseFromGui(const bool &boatLicense)
+{
+    m_boatLicense = boatLicense;
+}
+
+void GameLauncher::receivePlaneLicenseFromGui(const bool &planeLicense)
+{
+    m_planeLicense = planeLicense;
+}
+
+void GameLauncher::sendModelToGuiByUser(const string &userName)
+{
+    emit sendModelToGui(new VehicleTableModel(this, m_games.at(userName)->getUserVehicles()));
 }
