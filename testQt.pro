@@ -10,40 +10,40 @@ CONFIG += c++17
 
 SOURCES += \
     logger.cpp \
-    model/boat.cpp \
-    model/boatfactory.cpp \
-    model/carfactory.cpp \
-    model/game.cpp \
-    model/gamelauncher.cpp \
-    model/motorbike.cpp \
-    model/motorbikefactory.cpp \
-    model/plane.cpp \
-    model/planefactory.cpp \
-    model/vehicle.cpp \
-    model/vehiclefactory.cpp \
-    model/vehicletablemodel.cpp \
-    model\car.cpp \
+    datamodel/models/boat.cpp \
+    datamodel/factories/boatfactory.cpp \
+    datamodel/factories/carfactory.cpp \
+    datamodel/models/game.cpp \
+    controller/gamelauncher.cpp \
+    datamodel/models/motorbike.cpp \
+    datamodel/factories/motorbikefactory.cpp \
+    datamodel/models/plane.cpp \
+    datamodel/factories/planefactory.cpp \
+    datamodel/models/vehicle.cpp \
+    datamodel/factories/vehiclefactory.cpp \
+    datamodel/models/vehicletablemodel.cpp \
+    datamodel/models\car.cpp \
     main.cpp \
     mainwindow.cpp \
-    model\user.cpp
+    datamodel/models/user.cpp
 
 HEADERS += \
     logger.h \
-    model/boat.h \
-    model/boatfactory.h \
-    model/carfactory.h \
-    model/game.h \
-    model/gamelauncher.h \
-    model/motorbike.h \
-    model/motorbikefactory.h \
-    model/plane.h \
-    model/planefactory.h \
-    model/vehicle.h \
-    model/vehiclefactory.h \
-    model/vehicletablemodel.h \
-    model\car.h \
+    datamodel/models/boat.h \
+    datamodel/factories/boatfactory.h \
+    datamodel/factories/carfactory.h \
+    datamodel/models/game.h \
+    controller/gamelauncher.h \
+    datamodel/models/motorbike.h \
+    datamodel/factories/motorbikefactory.h \
+    datamodel/models/plane.h \
+    datamodel/factories/planefactory.h \
+    datamodel/models/vehicle.h \
+    datamodel/factories/vehiclefactory.h \
+    datamodel/models/vehicletablemodel.h \
+    datamodel/models\car.h \
     mainwindow.h \
-    model\user.h \
+    datamodel/models/user.h \
     utilities.h
 
 FORMS += \

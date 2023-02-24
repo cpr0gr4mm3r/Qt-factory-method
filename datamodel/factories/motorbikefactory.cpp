@@ -1,5 +1,5 @@
 #include "motorbikefactory.h"
-#include "motorbike.h"
+#include "datamodel/models/motorbike.h"
 #include <QString>
 
 MotorbikeFactory::MotorbikeFactory()

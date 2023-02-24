@@ -1,5 +1,5 @@
 #include "carfactory.h"
-#include "car.h"
+#include "datamodel/models/car.h"
 #include <QString>
 
 CarFactory::CarFactory()

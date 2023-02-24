@@ -1,5 +1,5 @@
 #include "vehiclefactory.h"
-#include "vehicle.h"
+#include "datamodel/models/vehicle.h"
 
 VehicleFactory::VehicleFactory()
 {

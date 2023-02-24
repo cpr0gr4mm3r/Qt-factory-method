@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 #include <QObject>
-#include "vehicle.h"
+#include "datamodel/models/vehicle.h"
 
 class Game;
 class VehicleTableModel;

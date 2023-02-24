@@ -1,5 +1,5 @@
 #include "planefactory.h"
-#include "plane.h"
+#include "datamodel/models/plane.h"
 #include <QString>
 
 PlaneFactory::PlaneFactory()

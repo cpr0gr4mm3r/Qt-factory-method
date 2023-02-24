@@ -1,11 +1,11 @@
 #include "gamelauncher.h"
-#include "boatfactory.h"
-#include "carfactory.h"
-#include "motorbikefactory.h"
-#include "planefactory.h"
-#include "game.h"
+#include "datamodel/factories/boatfactory.h"
+#include "datamodel/factories/carfactory.h"
+#include "datamodel/factories/motorbikefactory.h"
+#include "datamodel/factories/planefactory.h"
+#include "datamodel/models/game.h"
 #include "logger.h"
-#include "vehicletablemodel.h"
+#include "datamodel/models/vehicletablemodel.h"
 #include <QStringListModel>
 
 using namespace std;

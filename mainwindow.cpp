@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "model/gamelauncher.h"
-#include "model/VehicleTableModel.h"
+#include "controller/gamelauncher.h"
+#include "datamodel/models/VehicleTableModel.h"
 #include "utilities.h"
 #include <QMessageBox>
 #include <QStringListModel>

@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <vector>
-#include "model\vehicle.h"
+#include "datamodel/models/vehicle.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

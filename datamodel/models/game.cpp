@@ -1,5 +1,5 @@
 #include "game.h"
-#include "vehiclefactory.h"
+#include "datamodel/factories/vehiclefactory.h"
 #include "user.h"
 #include "vehicle.h"
 

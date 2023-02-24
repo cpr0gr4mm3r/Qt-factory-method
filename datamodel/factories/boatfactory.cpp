@@ -1,5 +1,5 @@
 #include "boatfactory.h"
-#include "boat.h"
+#include "datamodel/models/boat.h"
 #include <QString>
 
 BoatFactory::BoatFactory()
