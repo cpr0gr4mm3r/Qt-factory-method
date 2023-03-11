@@ -74,6 +74,10 @@ signals:
      * @param planeLicense. Flag that indicates if the driver has a plane license entered by the user.
      */
     void sendPlaneLicenseToGameLauncher(const bool &planeLicense);
+    /**
+     * @brief updatePosition. Signal that sends to MarbleVirtualGlobe the order to center in the stored coordinate.
+     */
+    void updatePosition();
 
 private slots:
     /**

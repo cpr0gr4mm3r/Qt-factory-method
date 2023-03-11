@@ -1,5 +1,6 @@
 #include "vehiclefactory.h"
 #include "datamodel/models/vehicle.h"
+#include <ctime>
 
 VehicleFactory::VehicleFactory()
 {

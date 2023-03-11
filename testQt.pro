@@ -25,7 +25,8 @@ SOURCES += \
     datamodel/models\car.cpp \
     main.cpp \
     mainwindow.cpp \
-    datamodel/models/user.cpp
+    datamodel/models/user.cpp \
+    marblevirtualglobe.cpp
 
 HEADERS += \
     logger.h \
@@ -44,10 +45,18 @@ HEADERS += \
     datamodel/models\car.h \
     mainwindow.h \
     datamodel/models/user.h \
+    marblevirtualglobe.h \
     utilities.h
 
 FORMS += \
     mainwindow.ui
+
+MSVC_PATH  = "C:\Qt\Qt5.14\5.14.1\mingw73_64"
+MARBLE_PATH  = "C:\Program Files (x86)\marble"
+
+INCLUDEPATH += $$MARBLE_PATH\include #$$MSVC_PATH/../../Tools/OpenSSL/Win_x64/include
+
+LIBS     += -L$$MARBLE_PATH\lib -lmarblewidget-qt5 #-L$$MSVC_PATH/../../Tools/OpenSSL/Win_x64/lib -lcrypto -lssl
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

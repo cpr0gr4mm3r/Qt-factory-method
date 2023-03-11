@@ -31,6 +31,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, SIGNAL(sendMotorbikeLicenseToGameLauncher(const bool &)), m_gameLauncher, SLOT(receiveMotorbikeLicenseFromGui(const bool &)));
     connect(this, SIGNAL(sendBoatLicenseToGameLauncher(const bool &)), m_gameLauncher, SLOT(receiveBoatLicenseFromGui(const bool &)));
     connect(this, SIGNAL(sendPlaneLicenseToGameLauncher(const bool &)), m_gameLauncher, SLOT(receivePlaneLicenseFromGui(const bool &)));
+    connect(ui->marbleProjectionComboBox, SIGNAL(currentIndexChanged(int)), ui->marbleWidget, SLOT(switchToProjection(int)));
+    connect(ui->longitudeLineEdit, SIGNAL(textChanged(const QString &)), ui->marbleWidget, SLOT(receiveLongitudeFromGui(const QString &)));
+    connect(ui->latitudeLineEdit, SIGNAL(textChanged(const QString &)), ui->marbleWidget, SLOT(receiveLatitudeFromGui(const QString &)));
+    connect(ui->altitudeLineEdit, SIGNAL(textChanged(const QString &)), ui->marbleWidget, SLOT(receiveAltitudeFromGui(const QString &)));
+    connect(this, SIGNAL(updatePosition()), ui->marbleWidget, SLOT(updatePosition()));
 }
 
 MainWindow::~MainWindow()
@@ -54,7 +59,11 @@ void MainWindow::refreshVehiclesTableWidget(std::vector<Vehicle*> vehicles)
 
 void MainWindow::processInformation()
 {
-    if (Utilities::ageIsValid(ui->userAgeLineEdit->text()))
+    bool ageIsValid(Utilities::ageIsValid(ui->userAgeLineEdit->text()));
+    bool latitudeComponentIsValid(Utilities::coordinateComponentIsValid(ui->latitudeLineEdit->text()));
+    bool longitudeComponentIsValid(Utilities::coordinateComponentIsValid(ui->longitudeLineEdit->text()));
+    bool altitudeComponentIsValid(Utilities::coordinateComponentIsValid(ui->altitudeLineEdit->text()));
+    if (ageIsValid && latitudeComponentIsValid && longitudeComponentIsValid && altitudeComponentIsValid)
     {
         ui->startGamePushButton->setEnabled(false);
         ui->changeStatePushButton->setEnabled(true);
@@ -62,11 +71,33 @@ void MainWindow::processInformation()
         {
             m_gameLauncher->initGame();
         }
+        emit updatePosition();
     }
-    else
+    else if (!ageIsValid)
     {
         QMessageBox::warning(this, tr("Driver & Vehicles"),
                              tr("The age is not valid.\n"
+                                "Please provide a valid value."),
+                             QMessageBox::Ok);
+    }
+    else if (!latitudeComponentIsValid)
+    {
+        QMessageBox::warning(this, tr("Driver & Vehicles"),
+                             tr("The latitude is not valid.\n"
+                                "Please provide a valid value."),
+                             QMessageBox::Ok);
+    }
+    else if (!longitudeComponentIsValid)
+    {
+        QMessageBox::warning(this, tr("Driver & Vehicles"),
+                             tr("The longitude is not valid.\n"
+                                "Please provide a valid value."),
+                             QMessageBox::Ok);
+    }
+    else if (!altitudeComponentIsValid)
+    {
+        QMessageBox::warning(this, tr("Driver & Vehicles"),
+                             tr("The altitude is not valid.\n"
                                 "Please provide a valid value."),
                              QMessageBox::Ok);
     }

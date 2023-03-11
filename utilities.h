@@ -17,6 +17,17 @@ public:
         age.toInt(&ok, 10);
         return ok;
     }
+
+    /**
+     * @brief coordinateComponentIsValid. Static method that checks if the coordinate component is a valid data.
+     * @param coordinateComponent. The coordinate component in string format to be validate.
+     */
+    static coordinateComponentIsValid(const QString &coordinateComponent)
+    {
+        bool ok;
+        coordinateComponent.toDouble(&ok);
+        return ok;
+    }
 };
 
 #endif // UTILITIES_H

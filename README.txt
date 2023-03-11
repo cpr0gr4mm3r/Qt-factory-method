@@ -1,0 +1,49 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// MARBLE INSTALLATION ///////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+1.- Create a directory in C:\QtProjects\marble
+mkdir -p C:\QtProjects\marble
+2.- cd C:\QtProjects\marble
+3.- Download Qt Marble:
+git clone https://invent.kde.org/education/marble
+4.- Build Qt Marble by using Qt v5.15.2:
+mkdir build
+cd build
+cmake -G "MinGW Makefiles" -DQTONLY=TRUE -DQT5BUILD=TRUE -DCMAKE_BUILD_TYPE=Release ..
+mingw32-make
+5.- Open command line in administrator mode and then:
+mingw32-make install
+6.- marble-qt.exe should be appeared on Program Files (x86)\marble. Add "Program Files (x86)\marble" folder to Path variable or distribute libastro.dll, libmarbledeclarative.dll and libmarblewidget-qt5.dll with your program.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// MARBLE DEPENDENCIES IN .pro FILE ///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Then, you need to add the include and library marble paths and the needed marble libraries to the .pro file:
+
+MARBLE_PATH  = "C:\Program Files (x86)\marble"
+INCLUDEPATH += $$MARBLE_PATH\include
+LIBS += -L$$MARBLE_PATH\lib -lmarblewidget-qt5
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// SSL SOLUTION ///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
+To fix the next error by using Marble Widget: qt.network.ssl: QSslSocket::connectToHostEncrypted: TLS initialization failed
+You need:
+
+    Open Qt MaintenanceTool
+
+    select and install OpenSLL form list
+
+    got to .pro file remove old SSL libs and include path from there
+
+    Add following libs for OpenSll 1.1.1 d
+
+MSVC_PATH  = "C:/Qt/Qt5.14/5.14.1/mingw73_64"
+LIBS += -L$$MSVC_PATH/../../Tools/OpenSSL/Win_x64/lib -lcrypto -lssl
+INCLUDEPATH+= $$MSVC_PATH/../../Tools/OpenSSL/Win_x64/include 
+
+
+
