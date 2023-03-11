@@ -37,5 +37,5 @@ void MarbleVirtualGlobe::receiveAltitudeFromGui(const QString &altitude)
 void MarbleVirtualGlobe::updatePosition()
 {
     centerOn(GeoDataCoordinates(m_longitude, m_latitude, m_altitude, GeoDataCoordinates::Degree));
-    zoomView(3000);
+    zoomView(2300);
 }
