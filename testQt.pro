@@ -51,12 +51,12 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
-MSVC_PATH  = "C:\Qt\Qt5.14\5.14.1\mingw73_64"
+MSVC_PATH  = "C:\Qt\5.15.2\mingw81_64"
 MARBLE_PATH  = "C:\Program Files (x86)\marble"
 
-INCLUDEPATH += $$MARBLE_PATH\include #$$MSVC_PATH/../../Tools/OpenSSL/Win_x64/include
+INCLUDEPATH += $$MARBLE_PATH\include $$MSVC_PATH\..\..\Tools\OpenSSL\Win_x64\include
 
-LIBS     += -L$$MARBLE_PATH\lib -lmarblewidget-qt5 #-L$$MSVC_PATH/../../Tools/OpenSSL/Win_x64/lib -lcrypto -lssl
+LIBS     += -L$$MARBLE_PATH\lib -lmarblewidget-qt5 -L$$MSVC_PATH\..\..\Tools\OpenSSL\Win_x64\bin -lcrypto-1_1-x64 -lssl-1_1-x64
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
